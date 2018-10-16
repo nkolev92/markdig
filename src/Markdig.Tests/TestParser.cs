@@ -12,6 +12,25 @@ namespace Markdig.Tests
 {
     public class TestParser
     {
+
+//        [TestCase(@"> hello <a name=""n""
+//> href=""javascript:alert('xss')"" > *you*</a>",
+//"<blockquote>\n<p>hello &lt;a name=&quot;n&quot;\nhref=&quot;javascript:alert('xss')&quot; &gt; <em>you</em>&lt;/a&gt;</p>\n</blockquote>\n", true)]
+        [TestCase(@"> hello <a name=""n""
+> href=""javascript:alert('xss')"" > *you*</a>",
+"<blockquote>\n<p>hello &lt;a name=&quot;n&quot;\nhref=&quot;javascript:alert('xss')&quot; &gt; <em>you</em>&lt;/a&gt;</p>\n</blockquote>\n", false)]
+        public void ParseMarkdownWithDisabledHtml(string data, string expected, bool disableHtml)
+        {
+            var builder = new MarkdownPipelineBuilder();
+            if (disableHtml)
+            {
+                builder.DisableHtml();
+            }
+            var parsedResults = Markdown.ToHtml(data, builder.Build());
+
+            Assert.AreEqual(expected, parsedResults);
+        }
+
         [Test]
         public void TestEmphasisAndHtmlEntity()
         {

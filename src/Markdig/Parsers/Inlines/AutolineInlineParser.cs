@@ -45,7 +45,7 @@ namespace Markdig.Parsers.Inlines
                     Column = column
                 };
             }
-            else if (EnableHtmlParsing)
+            else if ( EnableHtmlParsing)
             {
                 slice = saved;
                 string htmlTag;
